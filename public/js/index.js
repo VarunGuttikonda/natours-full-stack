@@ -5,6 +5,7 @@ import { login, logout } from './login';
 import { updateSettings } from './updateSettings';
 import { signup } from './signup';
 import { bookTour } from './stripe';
+import { showAlert } from './alerts';
 
 //DOM Cache
 const mapBox = document.getElementById('map');
@@ -81,3 +82,6 @@ if (bookBtn) {
     bookTour(tourId);
   });
 }
+
+const alertMessage = document.querySelector('body').dataset.alertMessage;
+if (alertMessage) showAlert('success', alertMessage, 20);
