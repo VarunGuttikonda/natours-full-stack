@@ -8,6 +8,7 @@ const xss = require('xss-clean'); //Remove XSS scripting
 const hpp = require('hpp'); //Parameter Pollution Prevent
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
@@ -23,6 +24,10 @@ app.enable('trust proxy');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
+
+app.use(cors());
+
+app.options('*', cors());
 
 //Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
