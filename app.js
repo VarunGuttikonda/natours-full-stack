@@ -9,6 +9,7 @@ const hpp = require('hpp'); //Parameter Pollution Prevent
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
@@ -16,6 +17,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const bookingController = require('./controller/bookingController');
 const viewRouter = require('./routes/viewRouter');
 
 const app = express();
@@ -48,6 +50,12 @@ const limiter = rateLimit({
 });
 
 app.use('/api', limiter);
+
+app.post(
+  '/webhook-checkout',
+  bodyParser.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
 
 //Body Parser
 app.use(express.json({ limit: '10kb' }));
